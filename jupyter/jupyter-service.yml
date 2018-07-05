@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  jupyter
+  labels:
+    app: jupyter
+spec:
+  selector:
+    app:  jupyter
+  type:  LoadBalancer
+  ports:
+  - port:  8888
+    targetPort: jupyter-server

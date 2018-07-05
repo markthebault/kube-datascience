@@ -1,0 +1,41 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: test-master
+  labels:
+    release: "test"
+    component: "test-spark-master"
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      component: "test-spark-master"
+  template:
+    metadata:
+      labels:
+        release: "test"
+        component: "test-spark-master"
+    spec:
+      containers:
+        - name: test-master
+          image: "gettyimages/spark:2.2.1-hadoop-2.7"
+          command: ["/bin/sh","-c"]
+          args: ["echo $(hostname -i) test-master >> /etc/hosts; /usr/spark-2.2.1/bin/spark-class org.apache.spark.deploy.master.Master"]
+          ports:
+            - containerPort: 7077
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "512Mi"
+          env:
+          - name: SPARK_DAEMON_MEMORY
+            value: "1g"
+          - name: SPARK_MASTER_HOST
+            value: test-master
+          - name: SPARK_MASTER_PORT
+            value: "7077"
+          - name: SPARK_MASTER_WEBUI_PORT
+            value: "8080"
