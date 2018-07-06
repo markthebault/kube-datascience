@@ -1,27 +1,27 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: test-worker
+  name: cluster-worker
   labels:
-    release: "test"
-    component: "test-spark-worker"
+    release: "cluster"
+    component: "cluster-spark-worker"
 spec:
   replicas: 3
   strategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      component: "test-spark-worker"
+      component: "cluster-spark-worker"
   template:
     metadata:
       labels:
-        release: "test"
-        component: "test-spark-worker"
+        release: "cluster"
+        component: "cluster-spark-worker"
     spec:
       containers:
-        - name: test-worker
+        - name: cluster-worker
           image: "gettyimages/spark:2.2.1-hadoop-2.7"
-          command: ["/usr/spark-2.2.1/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://test-master:7077"]
+          command: ["/usr/spark-2.2.1/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://cluster-master:7077"]
           ports:
             - containerPort: 8081
           resources:

@@ -1,13 +1,28 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: test-master
+  name: cluster-master
   labels:
-    release: "test"
-    component: "test-spark-master"
+    release: "cluster"
+    component: "cluster-spark-master"
 spec:
   ports:
     - port: 7077
       targetPort: 7077
   selector:
-    component: "test-spark-master"
+    component: "cluster-spark-master"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cluster-master-webui
+  labels:
+    release: cluster
+    component: cluster-spark-master
+spec:
+  ports:
+    - port: 9090
+      targetPort: 9090
+  selector:
+    component: "cluster-spark-master"
+  type: LoadBalancer

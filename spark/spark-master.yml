@@ -1,28 +1,29 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: test-master
+  name: cluster-master
   labels:
-    release: "test"
-    component: "test-spark-master"
+    release: "cluster"
+    component: "cluster-spark-master"
 spec:
   replicas: 1
   strategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      component: "test-spark-master"
+      component: "cluster-spark-master"
   template:
     metadata:
       labels:
-        release: "test"
-        component: "test-spark-master"
+        release: "cluster"
+        component: "cluster-spark-master"
     spec:
       containers:
-        - name: test-master
+      #Spark master
+        - name: cluster-master
           image: "gettyimages/spark:2.2.1-hadoop-2.7"
           command: ["/bin/sh","-c"]
-          args: ["echo $(hostname -i) test-master >> /etc/hosts; /usr/spark-2.2.1/bin/spark-class org.apache.spark.deploy.master.Master"]
+          args: ["echo $(hostname -i) cluster-master >> /etc/hosts; /usr/spark-2.2.1/bin/spark-class org.apache.spark.deploy.master.Master"]
           ports:
             - containerPort: 7077
             - containerPort: 8080
@@ -34,8 +35,14 @@ spec:
           - name: SPARK_DAEMON_MEMORY
             value: "1g"
           - name: SPARK_MASTER_HOST
-            value: test-master
+            value: cluster-master
           - name: SPARK_MASTER_PORT
             value: "7077"
           - name: SPARK_MASTER_WEBUI_PORT
             value: "8080"
+        #Spark Proxy for web ui
+        - name: cluster-webui-proxy
+          image: markthebault/spark-ui-proxy
+          command: ["python","/spark-ui-proxy.py","cluster-master:8080","9090"]
+          ports:
+            - containerPort: 9090
