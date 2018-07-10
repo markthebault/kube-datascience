@@ -1,0 +1,63 @@
+version: '3'
+services:
+
+  master:
+    image: markthebault/spark:spark-2.2.1-hadoop2.7.0
+    command: /usr/local/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    ports:
+      - 4040:4040
+      - 6066:6066
+      - 7077:7077
+    networks:
+      - spark-clstr
+
+  livy:
+    image: markthebault/livy:0.5.0
+    ports:
+      - 8998:8998
+    networks:
+      - spark-clstr
+    environment:
+      - LIVY_SPARK_MASTER=spark://master:7077
+    volumes:
+      - $PWD/livy/conf:/usr/livy/conf/
+  
+  jupyter:
+    image: markthebault/jupyter:0.1
+    ports:
+      - 8888:8888
+    networks:
+      - spark-clstr
+
+
+  worker:
+    image: markthebault/spark:spark-2.2.1-hadoop2.7.0
+    command: /usr/local/spark/bin/spark-class org.apache.spark.deploy.worker.Worker  spark://master:7077
+    networks:
+      - spark-clstr
+    deploy:
+      replicas: 2
+
+
+  spark-ui-proxy:
+    image: markthebault/spark-ui-proxy
+    command: master:8080 9090
+    ports:
+      - 9090:9090
+    networks:
+      - spark-clstr
+
+
+  # zeppelin:
+  #   image: markthebault/zeppelin:0.7.3-spark2.2.1
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - spark-clstr
+  #   environment:
+  #     - MASTER=spark://master:7077
+
+
+
+networks:
+  spark-clstr:
