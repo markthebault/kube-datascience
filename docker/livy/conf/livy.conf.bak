@@ -39,7 +39,7 @@
 # livy.ui.basePath = ""
 
 # What spark master Livy sessions should use.
-livy.spark.master = _SPARK_MASTER_
+livy.spark.master = 
 
 # What spark deploy mode Livy sessions should use.
 # livy.spark.deploy-mode = client

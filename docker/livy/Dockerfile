@@ -12,5 +12,7 @@ RUN curl -o livy.zip $URL \
 #ADD defaults/* defaults/
 COPY ./conf/ /usr/livy/conf/
 
+COPY entrypoint.sh /entrypoint.sh
+
 EXPOSE 8998
-CMD ["/bin/bash","-c", "/usr/livy/bin/livy-server start; tail -f /usr/livy/logs/livy--server.out"]
+CMD ["/bin/bash","/entrypoint.sh"]
