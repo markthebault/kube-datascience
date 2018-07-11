@@ -15,6 +15,20 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: cluster-livy
+  labels:
+    release: "cluster"
+    component: "cluster-spark-master"
+spec:
+  ports:
+    - port: 8998
+      targetPort: 8998
+  selector:
+    component: "cluster-spark-master"
+---
+apiVersion: v1
+kind: Service
+metadata:
   name: cluster-master-webui
   labels:
     release: cluster

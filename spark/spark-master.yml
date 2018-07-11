@@ -21,9 +21,9 @@ spec:
       containers:
       #Spark master
         - name: cluster-master
-          image: "gettyimages/spark:2.2.1-hadoop-2.7"
+          image: markthebault/spark:spark-2.2.1-hadoop2.7.0
           command: ["/bin/sh","-c"]
-          args: ["echo $(hostname -i) cluster-master >> /etc/hosts; /usr/spark-2.2.1/bin/spark-class org.apache.spark.deploy.master.Master"]
+          args: ["echo $(hostname -i) cluster-master >> /etc/hosts; /usr/local/spark/bin/spark-class org.apache.spark.deploy.master.Master"]
           ports:
             - containerPort: 7077
             - containerPort: 8080
@@ -46,3 +46,11 @@ spec:
           command: ["python","/spark-ui-proxy.py","cluster-master:8080","9090"]
           ports:
             - containerPort: 9090
+        #Spark Proxy for web ui
+        - name: cluster-livy
+          image: markthebault/livy:0.5.0
+          env:
+          - name: SPARK_MASTER
+            value: "spark://cluster-master:7077"
+          ports:
+            - containerPort: 8998

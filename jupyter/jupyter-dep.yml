@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: jupyter
-        image: jupyter/base-notebook
+        image: markthebault/jupyter:0.1
         command: ["start-notebook.sh","--NotebookApp.password='sha1:82444b712319:e18ea4690c88c2a5a257a87e759abb8f037f36e2'"]
         ports:
         - name: jupyter-server

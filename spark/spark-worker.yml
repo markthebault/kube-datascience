@@ -20,8 +20,8 @@ spec:
     spec:
       containers:
         - name: cluster-worker
-          image: "gettyimages/spark:2.2.1-hadoop-2.7"
-          command: ["/usr/spark-2.2.1/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://cluster-master:7077"]
+          image: markthebault/spark:spark-2.2.1-hadoop2.7.0
+          command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://cluster-master:7077"]
           ports:
             - containerPort: 8081
           resources:
