@@ -18,9 +18,9 @@ services:
     networks:
       - spark-clstr
     environment:
-      - LIVY_SPARK_MASTER=spark://master:7077
-    volumes:
-      - $PWD/livy/conf:/usr/livy/conf/
+      - SPARK_MASTER=spark://master:7077
+    # volumes:
+    #   - $PWD/livy/conf:/usr/livy/conf/
   
   jupyter:
     image: markthebault/jupyter:0.1
