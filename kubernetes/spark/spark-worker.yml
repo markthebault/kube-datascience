@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{STACK_NAME}}-worker
+  name: {{STACK_NAME}}-spark-worker
   namespace: {{NAMESPACE}}
   labels:
     release: "cluster"
@@ -20,9 +20,9 @@ spec:
         component: "{{STACK_NAME}}-spark-worker"
     spec:
       containers:
-        - name: {{STACK_NAME}}-worker
+        - name: {{STACK_NAME}}-spark-worker
           image: markthebault/spark:spark-2.2.1-hadoop2.7.0
-          command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://{{STACK_NAME}}-master:7077"]
+          command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://{{STACK_NAME}}-spark-master:7077"]
           ports:
             - containerPort: 8081
           resources:

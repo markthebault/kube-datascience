@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{STACK_NAME}}-master
+  name: {{STACK_NAME}}-spark-master
   namespace: {{NAMESPACE}}
   labels:
     release: "cluster"
@@ -31,7 +31,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{STACK_NAME}}-master-webui
+  name: {{STACK_NAME}}-spark-master-webui
   namespace: {{NAMESPACE}}
   labels:
     release: cluster
