@@ -10,9 +10,10 @@ The images are pused to my personal repository and are publicly available. Make 
 
 The Makefile will generate the deployment files for kubernetes, do not use the `kubenetes/*` files directly, use them via the Makefile.
 
-Deploy the environment:
+Deploy the environment (Variables are not needed, look into the Makefile to see the default values):
 ```
-$ make deploy NAMESPACE=my-original-namespace-name STACK_NAME=toto
+#By default the jupyter password is admin
+$ make deploy NAMESPACE=my-original-namespace-name STACK_NAME=toto JUPYTER_PASSWORD=admin
 ```
 
 ## How to build the docker images
@@ -25,7 +26,6 @@ Jinja is used to generate the deployment file. The execution of Jinja don't need
 The generated files will be located in `.tmp/`
 
 ## Improvments to be done
-- Create a custom password for jupyter when is lunched
 - Store the home directory of jupyter to an S3 bucket (or compatible)
 - Pass AWS environment variables to the containers dynamically
 - Add tensorflow capabilities to this environment

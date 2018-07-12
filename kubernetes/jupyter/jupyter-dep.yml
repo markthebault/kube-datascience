@@ -15,7 +15,7 @@ spec:
       containers:
       - name: jupyter
         image: markthebault/jupyter:0.1
-        command: ["start-notebook.sh","--NotebookApp.password='sha1:82444b712319:e18ea4690c88c2a5a257a87e759abb8f037f36e2'"]
+        command: ["start-notebook.sh","--NotebookApp.password='{{JUPYTER_PASSWORD}}'"]
         ports:
         - name: jupyter-server
           containerPort: 8888

@@ -1,6 +1,7 @@
 JINJA_CMD=docker run -it --rm -v $(PWD)/kubernetes:/kubernetes jlesage/render-template
 STACK_NAME=marcopolo
 NAMESPACE=marcopolo-ns
+JUPYTER_PASSWORD=admin
 
 all: build deploy
 
@@ -36,4 +37,7 @@ generate: generate-parameters
     done
 
 generate-parameters:
-	@echo '{"STACK_NAME":"$(STACK_NAME)","NAMESPACE":"$(NAMESPACE)"}' > kubernetes/parameters.json
+	@echo '{"STACK_NAME":"$(STACK_NAME)","NAMESPACE":"$(NAMESPACE)","JUPYTER_PASSWORD":"$(shell make generate-jupyter-password JUPYTER_PASSWORD=$(JUPYTER_PASSWORD))"}' > kubernetes/parameters.json
+
+generate-jupyter-password:
+	@docker run -it --rm markthebault/jupyter:0.1 python -c 'from notebook.auth import passwd;print(passwd("$(JUPYTER_PASSWORD)"))'
