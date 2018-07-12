@@ -15,6 +15,7 @@ In the root folder just run `make build`. If you need to customise the images, y
 
 ## Improvments to be done
 - Create a custom password for jupyter when is lunched
+- Store the home directory of jupyter to an S3 bucket (or compatible)
 - Lunch the different services in a separate namespace (let say we segregate by users)
 - Pass AWS environment variables to the containers dynamically
 - Add tensorflow capabilities to this environment
