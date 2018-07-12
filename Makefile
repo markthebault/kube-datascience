@@ -36,8 +36,18 @@ generate: generate-parameters
         $(JINJA_CMD) /kubernetes/namespace/$$file /kubernetes/parameters.json > .tmp/$$file; \
     done
 
+	@make output
+
 generate-parameters:
 	@echo '{"STACK_NAME":"$(STACK_NAME)","NAMESPACE":"$(NAMESPACE)","JUPYTER_PASSWORD":"$(shell make generate-jupyter-password JUPYTER_PASSWORD=$(JUPYTER_PASSWORD))"}' > kubernetes/parameters.json
 
 generate-jupyter-password:
 	@docker run -it --rm markthebault/jupyter:0.1 python -c 'from notebook.auth import passwd;print(passwd("$(JUPYTER_PASSWORD)"))'
+
+
+
+output:
+	@echo Jupyter URL:
+	@echo http://$(shell kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' service $(STACK_NAME)-jupyter --namespace $(NAMESPACE)):8888
+	@echo Spark WebUI URL:
+	@echo http://$(shell kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' service $(STACK_NAME)-spark-master-webui --namespace $(NAMESPACE)):9090

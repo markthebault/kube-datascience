@@ -1,4 +1,4 @@
-# Kubernetes Data Science
+# Kubernetes Data Science for EKS/GKE
 This project is an interactive datascience environment that is running on Kubernetes. Containers such as Jupyter and Apache Livy will be deployed as long as an spark cluster.
 
 At the moment kubernetes only supports spark submit in a cluster mode, which is good for production jobs but not so much for interactive analysis. This is the reason why a spark cluster is running in the environment.
@@ -18,6 +18,12 @@ $ make deploy NAMESPACE=my-original-namespace-name STACK_NAME=toto JUPYTER_PASSW
 
 ## How to build the docker images
 In the root folder just run `make build`. If you need to customise the images, you need to retag them and push them to your dockerhub account. If you are using minikube, you don't need to push the images to a custom repository, the internal docker images are shared with minikube.
+
+## Access to the services
+There is at the moment two services deployed with a loadbalancer (Externally accessible):
+- Jupyter
+- Spark webui
+to get the url of those services just run `make output`
 
 ## Good to know
 Makefiles are used to build and deploy everything, it can be easily integrated with a Jenkins server.
