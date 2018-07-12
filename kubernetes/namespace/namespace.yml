@@ -1,6 +1,6 @@
 kind: Namespace
 apiVersion: v1
 metadata:
-  name: datascience-toot
+  name: {{NAMESPACE}}
   labels:
-    name: datascience-toot
+    name: {{NAMESPACE}}

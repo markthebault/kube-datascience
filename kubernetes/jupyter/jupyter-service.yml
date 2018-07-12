@@ -1,14 +1,14 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name:  jupyter
-  namespace: datascience-toot
+  name:  {{STACK_NAME}}-jupyter
+  namespace: {{NAMESPACE}}
   labels:
-    app: jupyter
+    app: {{STACK_NAME}}-jupyter
 spec:
   selector:
-    app:  jupyter
+    app:  {{STACK_NAME}}-jupyter
   type:  LoadBalancer
   ports:
   - port:  8888
-    targetPort: jupyter-server
+    targetPort: 8888

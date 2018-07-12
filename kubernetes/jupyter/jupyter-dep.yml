@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: jupyter
-  namespace: datascience-toot
+  name: {{STACK_NAME}}-jupyter
+  namespace: {{NAMESPACE}}
   labels:
-    app: jupyter
+    app: {{STACK_NAME}}-jupyter
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: jupyter
+        app: {{STACK_NAME}}-jupyter
     spec:
       containers:
       - name: jupyter

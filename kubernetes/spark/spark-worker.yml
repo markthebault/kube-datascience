@@ -1,28 +1,28 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: cluster-worker
-  namespace: datascience-toot
+  name: {{STACK_NAME}}-worker
+  namespace: {{NAMESPACE}}
   labels:
     release: "cluster"
-    component: "cluster-spark-worker"
+    component: "{{STACK_NAME}}-spark-worker"
 spec:
   replicas: 3
   strategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      component: "cluster-spark-worker"
+      component: "{{STACK_NAME}}-spark-worker"
   template:
     metadata:
       labels:
         release: "cluster"
-        component: "cluster-spark-worker"
+        component: "{{STACK_NAME}}-spark-worker"
     spec:
       containers:
-        - name: cluster-worker
+        - name: {{STACK_NAME}}-worker
           image: markthebault/spark:spark-2.2.1-hadoop2.7.0
-          command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://cluster-master:7077"]
+          command: ["/usr/local/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://{{STACK_NAME}}-master:7077"]
           ports:
             - containerPort: 8081
           resources:

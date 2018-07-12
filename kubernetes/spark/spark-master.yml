@@ -1,30 +1,30 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: cluster-master
-  namespace: datascience-toot
+  name: {{STACK_NAME}}-master
+  namespace: {{NAMESPACE}}
   labels:
     release: "cluster"
-    component: "cluster-spark-master"
+    component: "{{STACK_NAME}}-spark-master"
 spec:
   replicas: 1
   strategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      component: "cluster-spark-master"
+      component: "{{STACK_NAME}}-spark-master"
   template:
     metadata:
       labels:
         release: "cluster"
-        component: "cluster-spark-master"
+        component: "{{STACK_NAME}}-spark-master"
     spec:
       containers:
       #Spark master
-        - name: cluster-master
+        - name: {{STACK_NAME}}-master
           image: markthebault/spark:spark-2.2.1-hadoop2.7.0
           command: ["/bin/sh","-c"]
-          args: ["echo $(hostname -i) cluster-master >> /etc/hosts; /usr/local/spark/bin/spark-class org.apache.spark.deploy.master.Master"]
+          args: ["echo $(hostname -i) {{STACK_NAME}}-master >> /etc/hosts; /usr/local/spark/bin/spark-class org.apache.spark.deploy.master.Master"]
           ports:
             - containerPort: 7077
             - containerPort: 8080
@@ -36,22 +36,22 @@ spec:
           - name: SPARK_DAEMON_MEMORY
             value: "1g"
           - name: SPARK_MASTER_HOST
-            value: cluster-master
+            value: {{STACK_NAME}}-master
           - name: SPARK_MASTER_PORT
             value: "7077"
           - name: SPARK_MASTER_WEBUI_PORT
             value: "8080"
         #Spark Proxy for web ui
-        - name: cluster-webui-proxy
+        - name: {{STACK_NAME}}-webui-proxy
           image: markthebault/spark-ui-proxy
-          command: ["python","/spark-ui-proxy.py","cluster-master:8080","9090"]
+          command: ["python","/spark-ui-proxy.py","{{STACK_NAME}}-master:8080","9090"]
           ports:
             - containerPort: 9090
         #Spark Proxy for web ui
-        - name: cluster-livy
+        - name: {{STACK_NAME}}-livy
           image: markthebault/livy:0.5.0
           env:
           - name: SPARK_MASTER
-            value: "spark://cluster-master:7077"
+            value: "spark://{{STACK_NAME}}-master:7077"
           ports:
             - containerPort: 8998
