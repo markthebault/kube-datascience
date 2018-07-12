@@ -2,6 +2,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: cluster-master
+  namespace: datascience-toot
   labels:
     release: "cluster"
     component: "cluster-spark-master"

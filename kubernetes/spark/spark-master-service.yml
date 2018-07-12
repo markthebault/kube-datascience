@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cluster-master
+  namespace: datascience-toot
   labels:
     release: "cluster"
     component: "cluster-spark-master"
@@ -16,6 +17,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cluster-livy
+  namespace: datascience-toot
   labels:
     release: "cluster"
     component: "cluster-spark-master"
@@ -30,6 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cluster-master-webui
+  namespace: datascience-toot
   labels:
     release: cluster
     component: cluster-spark-master
