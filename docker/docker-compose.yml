@@ -48,14 +48,14 @@ services:
       - spark-clstr
 
 
-  # zeppelin:
-  #   image: markthebault/zeppelin:0.7.3-spark2.2.1
-  #   ports:
-  #     - 8080:8080
-  #   networks:
-  #     - spark-clstr
-  #   environment:
-  #     - MASTER=spark://master:7077
+  zeppelin:
+    image: apache/zeppelin:0.8.0
+    ports:
+      - 8080:8080
+    networks:
+      - spark-clstr
+    environment:
+      - MASTER=spark://master:7077
 
 
 
