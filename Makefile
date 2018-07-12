@@ -12,6 +12,8 @@ deploy: generate
 	kubectl apply -f .tmp/namespace.yml
 	@sleep 3
 	kubectl apply -f .tmp/apps/
+	@make output
+
 
 
 delete:
@@ -35,8 +37,6 @@ generate: generate-parameters
 	@for file in $(shell ls kubernetes/namespace/) ; do \
         $(JINJA_CMD) /kubernetes/namespace/$$file /kubernetes/parameters.json > .tmp/$$file; \
     done
-
-	@make output
 
 generate-parameters:
 	@echo '{"STACK_NAME":"$(STACK_NAME)","NAMESPACE":"$(NAMESPACE)","JUPYTER_PASSWORD":"$(shell make generate-jupyter-password JUPYTER_PASSWORD=$(JUPYTER_PASSWORD))"}' > kubernetes/parameters.json

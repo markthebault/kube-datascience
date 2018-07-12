@@ -1,2 +1,3 @@
 .tmp/*
 kubernetes/parameters.json
+portal-server/*.txt

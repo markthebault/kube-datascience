@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>First app</title>
+    <link rel="stylesheet" href="{{ url_for('static',
+		filename='style.css') }}">
+</head>
+
+<body>
+    {% from "_formhelpers.html" import render_field %}
+    <h2>To deploy a new datascience stack enter the following values</h2>
+
+    <form method=post action="/hello">
+        <dl>
+            Stack Name: {{ render_field(form.stack_name) }}
+        </dl>
+        <input type=submit value='Deploy Stack' name='submit_btn'>
+    </form>
+
+    <br>
+    <br>
+    <div>Stack already deployed</div>
+    <ul>
+        {% for item in stacks_deployed %}
+        <li> {{ item }} </li>
+        {% endfor %}
+    </ul>
+</body>
+
+</html>
