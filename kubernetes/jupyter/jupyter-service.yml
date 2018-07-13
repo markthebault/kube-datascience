@@ -5,6 +5,7 @@ metadata:
   namespace: {{NAMESPACE}}
   labels:
     app: {{STACK_NAME}}-jupyter
+    stack: {{STACK_NAME}}
 spec:
   selector:
     app:  {{STACK_NAME}}-jupyter

@@ -6,6 +6,8 @@ metadata:
   labels:
     release: "cluster"
     component: "{{STACK_NAME}}-spark-worker"
+    stack: {{STACK_NAME}}
+    app: {{STACK_NAME}}-spark-worker
 spec:
   replicas: 3
   strategy:

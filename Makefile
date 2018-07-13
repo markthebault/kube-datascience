@@ -9,33 +9,42 @@ build:
 	@cd docker && make build
 
 deploy: generate
-	kubectl apply -f .tmp/namespace.yml
+	kubectl apply -f .tmp/$(NAMESPACE)/namespace.yml
 	@sleep 3
-	kubectl apply -f .tmp/apps/
+	kubectl apply -f .tmp/$(NAMESPACE)/network/
+	kubectl apply -f .tmp/$(NAMESPACE)/apps/
 	@make output
 
 
 
 delete:
-	kubectl delete -f .tmp/apps
-	kubectl delete -f .tmp/namespace.yml
+	kubectl delete -f .tmp/$(NAMESPACE)/apps
+	kubectl delete -f .tmp/$(NAMESPACE)/network
+	kubectl delete -f .tmp/$(NAMESPACE)/namespace.yml
 
 
 generate: generate-parameters
-	@mkdir -p .tmp/apps/
+	@mkdir -p .tmp/$(NAMESPACE)/apps
+	@mkdir -p .tmp/$(NAMESPACE)/network
+	
 	#GENERATING spark
 	@for file in $(shell ls kubernetes/spark/) ; do \
-        $(JINJA_CMD) /kubernetes/spark/$$file /kubernetes/parameters.json > .tmp/apps/$$file; \
+        $(JINJA_CMD) /kubernetes/spark/$$file /kubernetes/parameters.json > .tmp/$(NAMESPACE)/apps/$$file; \
     done
 
 	#GENERATING jupyter
 	@for file in $(shell ls kubernetes/jupyter/) ; do \
-        $(JINJA_CMD) /kubernetes/jupyter/$$file /kubernetes/parameters.json > .tmp/apps/$$file; \
+        $(JINJA_CMD) /kubernetes/jupyter/$$file /kubernetes/parameters.json > .tmp/$(NAMESPACE)/apps/$$file; \
     done
 
 	#GENERATING namespace
 	@for file in $(shell ls kubernetes/namespace/) ; do \
-        $(JINJA_CMD) /kubernetes/namespace/$$file /kubernetes/parameters.json > .tmp/$$file; \
+        $(JINJA_CMD) /kubernetes/namespace/$$file /kubernetes/parameters.json > .tmp/$(NAMESPACE)/$$file; \
+    done
+
+	#GENERATING network
+	@for file in $(shell ls kubernetes/network/) ; do \
+        $(JINJA_CMD) /kubernetes/network/$$file /kubernetes/parameters.json > .tmp/$(NAMESPACE)/network/$$file; \
     done
 
 generate-parameters:

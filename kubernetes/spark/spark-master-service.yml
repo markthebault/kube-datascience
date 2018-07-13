@@ -6,6 +6,9 @@ metadata:
   labels:
     release: "cluster"
     component: "{{STACK_NAME}}-spark-master"
+    stack: {{STACK_NAME}}
+    app: {{STACK_NAME}}-spark-master
+
 spec:
   ports:
     - port: 7077
@@ -21,6 +24,9 @@ metadata:
   labels:
     release: "cluster"
     component: "{{STACK_NAME}}-spark-master"
+    stack: {{STACK_NAME}}
+    app: {{STACK_NAME}}-livy
+
 spec:
   ports:
     - port: 8998
@@ -36,6 +42,8 @@ metadata:
   labels:
     release: cluster
     component: {{STACK_NAME}}-spark-master
+    stack: {{STACK_NAME}}
+    app: {{STACK_NAME}}-webui
 spec:
   ports:
     - port: 9090

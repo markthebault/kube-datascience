@@ -1,0 +1,16 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  namespace: {{NAMESPACE}}
+  name: allow-jupyter-ingress
+spec:
+  podSelector:
+    matchLabels:
+      app: {{STACK_NAME}}-jupyter
+  ingress:
+  - from:
+    - ipBlock:
+        cidr: 0.0.0.0/0
+    ports:
+    - protocol: TCP
+      port: 8888
