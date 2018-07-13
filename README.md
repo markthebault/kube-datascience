@@ -33,5 +33,6 @@ The generated files will be located in `.tmp/`
 
 ## Improvments to be done
 - Store the home directory of jupyter to an S3 bucket (or compatible)
+- Find a way to not expose directly the spark webui on the internet but make it available for the datascientist
 - Pass AWS environment variables to the containers dynamically
 - Add tensorflow capabilities to this environment
