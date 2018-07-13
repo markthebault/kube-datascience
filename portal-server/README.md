@@ -10,4 +10,5 @@ This server is executing the Makefile on the parent folder and setting the param
 - Generate the namespace name randomly
 - Save the stack and the namespace in Dynamodb (or similar)
 - Allow the data scientist to get the link of Jupyter and the spark UI directly in the portal
+- Make this server able to work and deploy things directly from a container (currently it requires to be executed locally)
 - [Think to other ideas]
