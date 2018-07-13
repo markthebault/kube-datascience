@@ -51,3 +51,7 @@ output:
 	@echo http://$(shell kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' service $(STACK_NAME)-jupyter --namespace $(NAMESPACE)):8888
 	@echo Spark WebUI URL:
 	@echo http://$(shell kubectl get -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' service $(STACK_NAME)-spark-master-webui --namespace $(NAMESPACE)):9090
+
+
+install-caliceo-EKS:
+	@kubectl apply -f https://docs.aws.amazon.com/eks/latest/userguide/calico.html
